@@ -41,7 +41,7 @@ export default function Registration() {
     e.preventDefault();
 
     try {
-      const response = await axiosInstance.post("/auth/register", formData); // ✅ Axios call
+      const response = await axiosInstance.post("/api/auth/register", formData); // ✅ Axios call
       const data = response.data;
 
       console.log("Signup response:", data);
