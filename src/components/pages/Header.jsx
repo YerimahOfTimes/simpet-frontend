@@ -1,13 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoSearch } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa6";
 import { FiShoppingCart } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiMenu, HiX } from "react-icons/hi";
+import Swal from "sweetalert2";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  // ✅ Check login state on mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
+
+  // ✅ Handle login/logout click
+  const handleUserClick = () => {
+    if (user) {
+      // Show logout confirmation
+      Swal.fire({
+        title: "Logout?",
+        text: "Are you sure you want to logout?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Logout",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          setUser(null);
+          Swal.fire("Logged Out!", "You have been logged out.", "success");
+          navigate("/login");
+        }
+      });
+    } else {
+      // Redirect to login
+      navigate("/login");
+    }
+  };
 
   return (
     <header className="bg-white shadow-md">
@@ -41,16 +77,16 @@ export default function Header() {
             <IoSearch size={22} />
           </button>
 
-          {/* User Icon */}
-          <Link to="/login">
-            <FaRegUser
-              size={24}
-              className="cursor-pointer text-gray-700 hover:text-blue-600 transition"
-              title="Login / Register"
-            />
-          </Link>
+          {/* 👤 User Icon (Login / Logout Handler) */}
+          <button
+            onClick={handleUserClick}
+            className="cursor-pointer text-gray-700 hover:text-blue-600 transition"
+            title={user ? "Logout" : "Login / Register"}
+          >
+            <FaRegUser size={24} />
+          </button>
 
-          {/* Cart Icon */}
+          {/* 🛒 Cart Icon */}
           <Link to="/cart" className="relative cursor-pointer">
             <FiShoppingCart
               size={24}
@@ -64,7 +100,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* ✅ Mobile Search Bar (Toggles on Icon Click) */}
+      {/* ✅ Mobile Search Bar */}
       {showMobileSearch && (
         <div className="md:hidden px-4 pb-3 animate-fadeIn">
           <div className="flex items-center border rounded-full px-3 py-2 shadow-sm">
@@ -81,7 +117,7 @@ export default function Header() {
       {/* ✅ Navbar Section */}
       <nav className="bg-blue-600 text-white py-2 relative z-50 shadow-md">
         <div className="container mx-auto flex justify-between items-center px-4">
-          {/* Hamburger Button (Mobile) */}
+          {/* Hamburger Button */}
           <button
             className="md:hidden text-white text-2xl"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -102,7 +138,7 @@ export default function Header() {
           </ul>
         </div>
 
-        {/* ✅ Compact Floating Mobile Dropdown */}
+        {/* ✅ Mobile Dropdown */}
         {isMenuOpen && (
           <div className="absolute right-4 mt-2 bg-white text-gray-800 rounded-lg shadow-lg py-2 w-44 md:hidden animate-fadeIn z-50">
             <ul className="flex flex-col text-sm">
@@ -129,3 +165,6 @@ export default function Header() {
     </header>
   );
 }
+
+
+
