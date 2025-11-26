@@ -12,6 +12,9 @@ export default function AddProduct() {
     condition: "New",
     deliveryOption: "",
     location: "",
+    sellerName: "",
+    sellerEmail: "",
+    sellerPhone: "",
     tags: "",
     description: "",
   });
@@ -22,7 +25,6 @@ export default function AddProduct() {
   const [showModal, setShowModal] = useState(false);
   const token = localStorage.getItem("token");
 
-  /* ✅ Handle Image Upload */
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     setImages(files);
@@ -30,7 +32,6 @@ export default function AddProduct() {
     setPreviewImages(previews);
   };
 
-  /* ✅ Submit Form Data using Axios */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -66,6 +67,9 @@ export default function AddProduct() {
         condition: "New",
         deliveryOption: "",
         location: "",
+        sellerName: "",
+        sellerEmail: "",
+        sellerPhone: "",
         tags: "",
         description: "",
       });
@@ -85,7 +89,7 @@ export default function AddProduct() {
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* ============ Basic Info ============ */}
+        {/* Basic Info */}
         <section>
           <h3 className="text-lg font-semibold text-gray-700 mb-3 border-b pb-1">
             Basic Information
@@ -125,7 +129,7 @@ export default function AddProduct() {
           </div>
         </section>
 
-        {/* ============ Category & Condition ============ */}
+        {/* Category & Condition */}
         <section>
           <h3 className="text-lg font-semibold text-gray-700 mb-3 border-b pb-1">
             Category & Condition
@@ -152,7 +156,7 @@ export default function AddProduct() {
           </div>
         </section>
 
-        {/* ============ Delivery & Location ============ */}
+        {/* Delivery & Seller Info */}
         <section>
           <h3 className="text-lg font-semibold text-gray-700 mb-3 border-b pb-1">
             Delivery & Seller Info
@@ -175,6 +179,30 @@ export default function AddProduct() {
               onChange={(e) => setProduct({ ...product, location: e.target.value })}
               className="border rounded px-3 py-2 w-full"
             />
+            <input
+              type="text"
+              placeholder="Seller Name"
+              value={product.sellerName}
+              onChange={(e) => setProduct({ ...product, sellerName: e.target.value })}
+              className="border rounded px-3 py-2 w-full"
+              required
+            />
+            <input
+              type="email"
+              placeholder="Seller Email"
+              value={product.sellerEmail}
+              onChange={(e) => setProduct({ ...product, sellerEmail: e.target.value })}
+              className="border rounded px-3 py-2 w-full"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Contact Number"
+              value={product.sellerPhone}
+              onChange={(e) => setProduct({ ...product, sellerPhone: e.target.value })}
+              className="border rounded px-3 py-2 w-full"
+              required
+            />
           </div>
 
           <input
@@ -186,7 +214,7 @@ export default function AddProduct() {
           />
         </section>
 
-        {/* ============ Description ============ */}
+        {/* Description */}
         <section>
           <h3 className="text-lg font-semibold text-gray-700 mb-3 border-b pb-1">
             Product Description
@@ -200,7 +228,7 @@ export default function AddProduct() {
           ></textarea>
         </section>
 
-        {/* ============ Images ============ */}
+        {/* Images */}
         <section>
           <h3 className="text-lg font-semibold text-gray-700 mb-3 border-b pb-1">
             Product Images
@@ -224,7 +252,7 @@ export default function AddProduct() {
           </div>
         </section>
 
-        {/* ============ Agreement ============ */}
+        {/* Agreement */}
         <div className="mt-5 text-center">
           <button
             type="button"
@@ -260,7 +288,7 @@ export default function AddProduct() {
         </button>
       </form>
 
-      {/* 🧾 Modal for Agreement */}
+      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 px-2">
           <div className="bg-white rounded-lg shadow-lg w-full sm:w-11/12 max-w-2xl p-6 overflow-y-auto max-h-[85vh] relative">
@@ -296,3 +324,4 @@ export default function AddProduct() {
     </div>
   );
 }
+

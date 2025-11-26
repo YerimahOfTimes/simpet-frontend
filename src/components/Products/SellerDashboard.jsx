@@ -6,21 +6,50 @@ import axios from "axios";
 const SellerDashboard = () => {
   const [sellerProducts, setSellerProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const token = localStorage.getItem("token");
+
+  // Fetch seller products
+  const fetchSellerProducts = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:5000/api/products/seller/me",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setSellerProducts(res.data.products || []);
+    } catch (error) {
+      console.error("❌ Failed to load seller products:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchSellerProducts = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/products/seller/me");
-        setSellerProducts(res.data || []);
-      } catch (error) {
-        console.error("❌ Failed to load seller products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchSellerProducts();
   }, []);
+
+  // Delete product
+  const deleteProduct = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this product?")) return;
+
+    try {
+      await axios.delete(`http://localhost:5000/api/products/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setSellerProducts((prev) => prev.filter((p) => p._id !== id));
+      alert("✅ Product deleted successfully");
+    } catch (error) {
+      console.error("❌ Failed to delete product:", error);
+      alert("❌ Failed to delete product");
+    }
+  };
+
+  // Totals
+  const totalProducts = sellerProducts.length;
+  const totalSold = sellerProducts.reduce((sum, p) => sum + (p.sold || 0), 0);
+  const totalEarnings = sellerProducts.reduce(
+    (sum, p) => sum + (p.sold * (p.price || 0)),
+    0
+  );
 
   if (loading)
     return (
@@ -41,6 +70,13 @@ const SellerDashboard = () => {
         </Link>
       </div>
 
+      {/* Totals */}
+      <div className="flex flex-wrap gap-4 mb-6 text-gray-700">
+        <p>Total Products: <strong>{totalProducts}</strong></p>
+        <p>Total Sold: <strong>{totalSold}</strong></p>
+        <p>Total Earnings: <strong>₦{totalEarnings.toLocaleString()}</strong></p>
+      </div>
+
       {sellerProducts.length === 0 ? (
         <p className="text-center text-gray-500">
           You haven’t listed any products yet.
@@ -54,9 +90,9 @@ const SellerDashboard = () => {
             >
               <img
                 src={
-                  item.image?.startsWith("http")
-                    ? item.image
-                    : `http://localhost:5000/${item.image || "uploads/default.jpg"}`
+                  item.images?.[0]?.startsWith("http")
+                    ? item.images[0]
+                    : `http://localhost:5000/${item.images?.[0] || "uploads/default.jpg"}`
                 }
                 alt={item.name}
                 className="w-full h-40 object-cover rounded-md"
@@ -65,13 +101,24 @@ const SellerDashboard = () => {
               <p className="text-blue-600 font-bold mt-1">
                 ₦{item.price?.toLocaleString()}
               </p>
-              <p className="text-sm text-gray-500">Sold: {item.sold || 0}</p>
+              <p className="text-sm text-gray-500">
+                Stock: {item.stock || 0} | Sold: {item.sold || 0}
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                Location: {item.location || "N/A"}
+              </p>
 
               <div className="mt-3 flex justify-between">
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded text-sm">
+                <Link
+                  to={`/edit-product/${item._id}`}
+                  className="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded text-sm"
+                >
                   Edit
-                </button>
-                <button className="bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded text-sm">
+                </Link>
+                <button
+                  onClick={() => deleteProduct(item._id)}
+                  className="bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded text-sm"
+                >
                   Delete
                 </button>
               </div>
@@ -84,3 +131,5 @@ const SellerDashboard = () => {
 };
 
 export default SellerDashboard;
+
+

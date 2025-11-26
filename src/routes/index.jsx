@@ -7,7 +7,6 @@ import Login from "../components/pages/Login";
 import Registration from "../components/pages/Registration";
 import ForgotPassword from "../components/pages/ForgotPassword";
 
-
 // 🧩 Admin Imports
 import AdminLayout from "../components/Admin/AdminLayout";
 import AdminDashboard from "../components/Admin/AdminDashboard";
@@ -18,7 +17,7 @@ import AllSellers from "../components/Admin/AllSellers";
 import AllWithdrawals from "../components/Admin/AllWithdrawals";
 import AdminSettings from "../components/Admin/AdminSettings";
 
-// 🛍️ Product + Seller Imports
+// 🛍️ Product + Seller
 import ProductList from "../components/Products/ProductList";
 import AddProduct from "../components/Products/AddProduct";
 import ProductDetails from "../components/Products/ProductDetails";
@@ -27,15 +26,20 @@ import SellerDashboard from "../components/Products/SellerDashboard";
 // 🛒 Cart + Chat + Payment
 import Cart from "../components/Cart/Cart";
 import Chat from "../components/Chat/chat";
+import Notifications from "../components/Chat/notification";
 import Payment from "../components/Payment/Payment";
-import Success from "../components/Payment/Success"; // ✅ Added this import
+import Success from "../components/Payment/Success";
 
 import Events from "../components/pages/Event";
 import About from "../components/pages/About";
 import Contact from "../components/pages/Contact";
 import Settings from "../components/pages/Settings";
 
-// ✅ ROUTER CONFIGURATION
+// 🏪 Store
+import StorePage from "../components/Store/StorePage";
+import CreateStore from "../components/Store/CreateStore";
+import StoreDetails from "../components/Store/StoreDetails";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -45,27 +49,34 @@ const router = createBrowserRouter([
       { path: "login", element: <Login /> },
       { path: "register", element: <Registration /> },
       { path: "forgotpassword", element: <ForgotPassword /> },
-      
 
-      // 🛍️ Products & Seller
+      // Products & Sellers
       { path: "products", element: <ProductList /> },
       { path: "product/:id", element: <ProductDetails /> },
       { path: "add-product", element: <AddProduct /> },
-      { path: "/SellerDashboard", element: <SellerDashboard /> },
+      { path: "SellerDashboard", element: <SellerDashboard /> },
 
-
-      // 🛒 Buyer Actions
-      { path: "cart", element: <Cart /> },
+      // Notifications + Chat
+      { path: "notification", element: <Notifications /> },
       { path: "chat/:sellerId", element: <Chat /> },
+
+      // Store
+      { path: "store", element: <StorePage /> },
+      { path: "store/create", element: <CreateStore /> },
+      { path: "store/:id", element: <StoreDetails /> },
+
+      // Buyer
+      { path: "cart", element: <Cart /> },
       { path: "payment", element: <Payment /> },
       { path: "success", element: <Success /> },
       { path: "events", element: <Events /> },
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
       { path: "settings", element: <Settings /> },
-
     ],
   },
+
+  // ADMIN ROUTES
   {
     path: "/admin",
     element: <AdminLayout />,
@@ -82,3 +93,4 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
+

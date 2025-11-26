@@ -10,7 +10,6 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Detect if this login page is for admin (e.g., /admin/login route)
   const isAdminLogin = location.pathname.includes("/admin");
 
   const handleLogin = async (e) => {
@@ -21,16 +20,14 @@ export default function Login() {
       const { data } = await axiosInstance.post("/auth/login", {
         email,
         password,
-        isAdmin: isAdminLogin, // 👈 add this flag for admin login
+        isAdmin: isAdminLogin,
       });
 
-      // Save token and user info
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
       alert("✅ Login successful");
 
-      // Redirect based on user role
       if (data.user.role === "admin") navigate("/admin/dashboard");
       else navigate("/");
     } catch (err) {
@@ -91,20 +88,12 @@ export default function Login() {
       </form>
 
       {!isAdminLogin && (
-        <>
-          <div className="mt-4 text-center text-sm">
-            <Link to="/forgotpassword" className="text-blue-600 hover:underline">
-              Forgot Password?
-            </Link>
-          </div>
-
-          <div className="mt-4 text-center text-sm">
-            Don't have an account?{" "}
-            <Link to="/register" className="text-blue-600 hover:underline">
-              Register here
-            </Link>
-          </div>
-        </>
+        <div className="mt-4 text-center text-sm">
+          Don't have an account?{" "}
+          <Link to="/register" className="text-blue-600 hover:underline">
+            Register here
+          </Link>
+        </div>
       )}
     </div>
   );
