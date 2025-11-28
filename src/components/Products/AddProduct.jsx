@@ -47,7 +47,7 @@ export default function AddProduct() {
       });
       images.forEach((image) => formData.append("images", image));
 
-      const res = await axios.post("http://localhost:5000/api/products", formData, {
+      const res = await axios.post("https://simpet-backend-1.onrender.com/api/products", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
