@@ -10,7 +10,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products");
+        const res = await axios.get("https://simpet-backend-1.onrender.com/api/products");
         let data = res.data;
 
         if (data && typeof data === "object" && !Array.isArray(data)) {

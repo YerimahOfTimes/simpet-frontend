@@ -9,7 +9,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+        const res = await axios.get(`https://simpet-backend-1.onrender.com/api/products/${id}`);
         setProduct(res.data.product || res.data);
       } catch (err) {
         console.error("❌ Error fetching product:", err);
@@ -28,7 +28,7 @@ const ProductDetails = () => {
   const imageUrl =
     product.images && product.images.length > 0
       ? product.images[0]
-      : "http://localhost:5000/uploads/default.jpg";
+      : "https://simpet-backend-1.onrender.com/uploads/default.jpg";
 
   const handleAddToCart = () => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];

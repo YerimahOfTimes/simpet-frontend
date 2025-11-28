@@ -12,7 +12,7 @@ const SellerDashboard = () => {
   const fetchSellerProducts = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/products/seller/me",
+        "https://simpet-backend-1.onrender.com/api/products/seller/me",
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setSellerProducts(res.data.products || []);
@@ -32,7 +32,7 @@ const SellerDashboard = () => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`, {
+      await axios.delete(`https://simpet-backend-1.onrender.com/api/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSellerProducts((prev) => prev.filter((p) => p._id !== id));
@@ -92,7 +92,7 @@ const SellerDashboard = () => {
                 src={
                   item.images?.[0]?.startsWith("http")
                     ? item.images[0]
-                    : `http://localhost:5000/${item.images?.[0] || "uploads/default.jpg"}`
+                    : `https://simpet-backend-1.onrender.com/${item.images?.[0] || "uploads/default.jpg"}`
                 }
                 alt={item.name}
                 className="w-full h-40 object-cover rounded-md"
