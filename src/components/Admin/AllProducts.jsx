@@ -1,9 +1,8 @@
-// src/components/Admin/AllProducts.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const AllProducts = () => {
-  const [products, setProducts] = useState([]); // always an array
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -12,13 +11,15 @@ const AllProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get("https://simpet-backend-1.onrender.com/api/admin/products", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // if admin auth required
-        },
-      });
+      const { data } = await axios.get(
+        "https://simpet-backend-1.onrender.com/api/admin/products",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
-      // Make sure data is an array
       if (Array.isArray(data)) {
         setProducts(data);
       } else if (Array.isArray(data.products)) {
@@ -26,11 +27,10 @@ const AllProducts = () => {
       } else {
         setProducts([]);
       }
-
-      setLoading(false);
     } catch (err) {
       console.error("Error fetching products:", err);
       setProducts([]);
+    } finally {
       setLoading(false);
     }
   };
@@ -39,19 +39,23 @@ const AllProducts = () => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
 
     try {
-      await axios.delete(`https://simpet-backend-1.onrender.com/api/admin/products/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      await axios.delete(
+        `https://simpet-backend-1.onrender.com/api/admin/products/${id}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
       setProducts(products.filter((p) => p._id !== id));
     } catch (err) {
       console.error("Delete error:", err);
     }
   };
 
-  if (loading) return <p>Loading products...</p>;
+  if (loading)
+    return <p className="text-center text-gray-500 mt-4 animate-pulse">Loading products...</p>;
 
   if (!Array.isArray(products) || products.length === 0)
-    return <p>No products found.</p>;
+    return <p className="text-center text-gray-500 mt-4">No products found.</p>;
 
   return (
     <div className="p-4 sm:p-6 bg-white rounded-xl shadow-md overflow-x-auto">
@@ -74,12 +78,14 @@ const AllProducts = () => {
               <td className="p-2 border">{index + 1}</td>
               <td className="p-2 border">{p.name}</td>
               <td className="p-2 border">{p.seller?.name || "Unknown"}</td>
-              <td className="p-2 border">₦{p.price}</td>
-              <td className="p-2 border">{p.stock}</td>
-              <td className="p-2 border">
-                <button className="text-blue-500 hover:underline mr-2">Edit</button>
+              <td className="p-2 border">₦{p.price?.toLocaleString() || 0}</td>
+              <td className="p-2 border">{p.stock ?? 0}</td>
+              <td className="p-2 border flex gap-2">
+                <button className="text-blue-500 hover:underline text-xs sm:text-sm">
+                  Edit
+                </button>
                 <button
-                  className="text-red-500 hover:underline"
+                  className="text-red-500 hover:underline text-xs sm:text-sm"
                   onClick={() => handleDelete(p._id)}
                 >
                   Delete
@@ -94,3 +100,4 @@ const AllProducts = () => {
 };
 
 export default AllProducts;
+

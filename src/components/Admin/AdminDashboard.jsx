@@ -50,37 +50,44 @@ export default function AdminDashboard() {
       {loading ? (
         <div className="text-center text-gray-500">Loading dashboard data...</div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          {/* Total Users */}
+          <div className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition flex flex-col items-center sm:items-start">
             <h2 className="text-sm text-gray-500">Total Users</h2>
-            <p className="text-2xl font-bold text-blue-600">{stats.users || 0}</p>
+            <p className="text-2xl sm:text-3xl font-bold text-blue-600 mt-2">{stats.users || 0}</p>
           </div>
 
-          <div className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+          {/* Products */}
+          <div className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition flex flex-col items-center sm:items-start">
             <h2 className="text-sm text-gray-500">Products</h2>
-            <p className="text-2xl font-bold text-green-600">
+            <p className="text-2xl sm:text-3xl font-bold text-green-600 mt-2">
               {stats.products || 0}
             </p>
           </div>
 
-          <div className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+          {/* Orders */}
+          <div className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition flex flex-col items-center sm:items-start">
             <h2 className="text-sm text-gray-500">Orders</h2>
-            <p className="text-2xl font-bold text-purple-600">
+            <p className="text-2xl sm:text-3xl font-bold text-purple-600 mt-2">
               {stats.orders || 0}
             </p>
           </div>
 
-          <div className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
+          {/* Revenue */}
+          <div className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition flex flex-col items-center sm:items-start">
             <h2 className="text-sm text-gray-500">Revenue</h2>
-            <p className="text-2xl font-bold text-orange-600">
+            <p className="text-2xl sm:text-3xl font-bold text-orange-600 mt-2">
               ₦{(stats.revenue || 0).toLocaleString()}
             </p>
           </div>
         </div>
       )}
 
-      <div className="mt-10 bg-white p-4 sm:p-6 rounded-xl shadow">
-        <h2 className="text-lg font-semibold text-gray-700 mb-3">Recent Activity</h2>
+      {/* Recent Activity */}
+      <div className="mt-8 sm:mt-10 bg-white p-4 sm:p-6 rounded-xl shadow overflow-x-auto">
+        <h2 className="text-lg font-semibold text-gray-700 mb-3 text-center sm:text-left">
+          Recent Activity
+        </h2>
         <ul className="text-sm text-gray-600 space-y-2">
           <li>✅ New users registered</li>
           <li>🛒 New products added</li>
@@ -90,5 +97,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
-
 

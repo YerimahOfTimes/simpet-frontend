@@ -16,6 +16,7 @@ export default function AdminLayout() {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Highlight active link
   const linkClass = (path) =>
     `flex items-center gap-3 px-3 py-2 rounded transition ${
       location.pathname.includes(path)
@@ -93,3 +94,4 @@ export default function AdminLayout() {
     </div>
   );
 }
+
