@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 
 const ProductDetails = () => {
@@ -9,7 +9,9 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`https://simpet-backend-1.onrender.com/api/products/${id}`);
+        const res = await axios.get(
+          `https://simpet-backend-1.onrender.com/api/products/${id}`
+        );
         setProduct(res.data.product || res.data);
       } catch (err) {
         console.error("❌ Error fetching product:", err);
@@ -55,11 +57,22 @@ const ProductDetails = () => {
             {product.location && (
               <p className="text-gray-500 mt-2">Location: {product.location}</p>
             )}
-            {product.sellerEmail && (
-              <p className="text-gray-500 mt-1">Email: {product.sellerEmail}</p>
+            {product.email && (
+              <p className="text-gray-500 mt-1">Email: {product.email}</p>
             )}
-            {product.sellerPhone && (
-              <p className="text-gray-500 mt-1">Phone: {product.sellerPhone}</p>
+            {product.contactNumber && (
+              <p className="text-gray-500 mt-1">Phone: {product.contactNumber}</p>
+            )}
+            {product.store && (
+              <p className="text-gray-500 mt-1">
+                Store:{" "}
+                <Link
+                  to={`/store/${product.store._id}`}
+                  className="text-blue-600 hover:underline"
+                >
+                  {product.store.name || "View Store"}
+                </Link>
+              </p>
             )}
           </div>
 
@@ -79,6 +92,3 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
-
-
-
