@@ -7,9 +7,8 @@ const ProductCard = ({ product }) => {
   const imageUrl =
     product.images && product.images.length > 0
       ? product.images[0]
-      :"https://simpet-backend-1.onrender.com/uploads/default.jpg";
+      : "https://simpet-backend-1.onrender.com/uploads/default.jpg";
 
-  // Add product to cart
   const handleAddToCart = () => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     cart.push(product);
@@ -19,7 +18,6 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className="bg-white border rounded-2xl p-4 shadow-md hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-full">
-      {/* Clickable image to go to product details */}
       <div
         className="w-full h-40 sm:h-48 bg-gray-100 flex items-center justify-center rounded-xl overflow-hidden cursor-pointer"
         onClick={() => navigate(`/product/${product._id}`)}
@@ -31,7 +29,6 @@ const ProductCard = ({ product }) => {
         />
       </div>
 
-      {/* Product Info */}
       <div className="mt-3 flex flex-col flex-1 justify-between">
         <div>
           <h3 className="text-base sm:text-lg font-semibold text-gray-800 truncate">
@@ -45,14 +42,19 @@ const ProductCard = ({ product }) => {
               Location: {product.location}
             </p>
           )}
-          {product.sellerEmail && (
+          {product.email && (
             <p className="text-gray-500 text-xs sm:text-sm mt-1">
-              Email: {product.sellerEmail}
+              Email: {product.email}
             </p>
           )}
-          {product.sellerPhone && (
+          {product.contactNumber && (
             <p className="text-gray-500 text-xs sm:text-sm mt-1">
-              Phone: {product.sellerPhone}
+              Phone: {product.contactNumber}
+            </p>
+          )}
+          {product.store && (
+            <p className="text-gray-500 text-xs sm:text-sm mt-1">
+              Store: {product.store.name || "View Store"}
             </p>
           )}
         </div>
@@ -74,6 +76,7 @@ const ProductCard = ({ product }) => {
 };
 
 export default ProductCard;
+
 
 
 

@@ -1,4 +1,3 @@
-// src/components/Products/ProductList.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "./ProductCard";
@@ -11,13 +10,8 @@ const ProductList = () => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get("https://simpet-backend-1.onrender.com/api/products");
-        let data = res.data;
-
-        if (data && typeof data === "object" && !Array.isArray(data)) {
-          data = data.products || [];
-        }
-
-        setProducts(Array.isArray(data) ? data : []);
+        const data = res.data.products || [];
+        setProducts(data);
       } catch (error) {
         console.error("❌ Error fetching products:", error);
         setProducts([]);
@@ -46,8 +40,8 @@ const ProductList = () => {
         <p className="text-gray-500 text-center">No products available yet.</p>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
-          {products.map((p, index) => (
-            <ProductCard key={p._id || index} product={p} />
+          {products.map((product) => (
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
       )}
