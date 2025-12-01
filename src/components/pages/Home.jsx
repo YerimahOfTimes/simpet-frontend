@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ProductCard from "../Products/ProductCard";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 // 🖼️ Banner images for carousel
@@ -32,30 +31,6 @@ export default function Home() {
       (prev) => (prev - 1 + bannerImages.length) % bannerImages.length
     );
   };
-
-  const featuredProducts = [
-    {
-      id: 1,
-      name: "Smart Watch",
-      price: 12000,
-      image:
-        "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=400&q=80",
-    },
-    {
-      id: 2,
-      name: "Wireless Headphones",
-      price: 18000,
-      image:
-        "https://images.unsplash.com/photo-1518449007430-2c14b7a00e0e?auto=format&fit=crop&w=400&q=80",
-    },
-    {
-      id: 3,
-      name: "Stylish Backpack",
-      price: 9500,
-      image:
-        "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=400&q=80",
-    },
-  ];
 
   return (
     <div>
@@ -116,26 +91,15 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 🌟 FEATURED PRODUCTS */}
-      <section className="py-12 px-6 md:px-12">
-        <h2 className="text-2xl font-semibold text-center mb-8">
-          Featured Products
-        </h2>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {featuredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-
-        <div className="text-center mt-10">
-          <Link
-            to="/Products"
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
-          >
-            View All Products
-          </Link>
-        </div>
-      </section>
+      {/* View All Products Button */}
+      <div className="text-center my-12">
+        <Link
+          to="/Products"
+          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+        >
+          View All Products
+        </Link>
+      </div>
 
       {/* 🧾 About / CTA Section */}
       <section className="bg-gray-100 py-12 px-6 md:px-16 text-center">
@@ -155,7 +119,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-
-
