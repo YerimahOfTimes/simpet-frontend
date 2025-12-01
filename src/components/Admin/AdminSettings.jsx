@@ -23,7 +23,7 @@ export default function AdminSettings() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/settings", {
+        const res = await axios.get("https://simpet-backend-1.onrender.com/api/admin/settings", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAdmin(res.data || defaultAdmin);
@@ -38,7 +38,7 @@ export default function AdminSettings() {
   // NEW: Fetch users for user management
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/users", {
+      const res = await axios.get("https://simpet-backend-1.onrender.com/api/admin/users", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(res.data);
@@ -51,7 +51,7 @@ export default function AdminSettings() {
   const makeAdmin = async (userId) => {
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/admin/make-admin/${userId}`,
+        `https://simpet-backend-1.onrender.com/api/admin/make-admin/${userId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

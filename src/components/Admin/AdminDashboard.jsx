@@ -22,7 +22,7 @@ export default function AdminDashboard() {
     const fetchStats = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/admin/dashboard",
+          "https://simpet-backend-1.onrender.com/api/admin/dashboard",
           {
             headers: { Authorization: `Bearer ${token}` },
           }

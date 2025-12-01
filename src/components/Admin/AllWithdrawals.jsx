@@ -11,7 +11,7 @@ const AllWithdrawals = () => {
 
   const fetchWithdrawals = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/admin/withdrawals");
+      const { data } = await axios.get("https://simpet-backend-1.onrender.com/api/admin/withdrawals");
       setWithdrawals(data.withdrawals || []);
     } catch (err) {
       console.error("Error fetching withdrawals:", err);
@@ -20,7 +20,7 @@ const AllWithdrawals = () => {
 
   const handleAction = async (id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/admin/withdrawals/${id}`, { status });
+      await axios.put(`https://simpet-backend-1.onrender.com/api/admin/withdrawals/${id}`, { status });
       alert(`✅ Withdrawal ${status}`);
       fetchWithdrawals();
     } catch (err) {

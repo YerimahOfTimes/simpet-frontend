@@ -18,7 +18,7 @@ const AllEvents = () => {
 
   const fetchEvents = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/admin/events");
+      const { data } = await axios.get("https://simpet-backend-1.onrender.com/api/admin/events");
       setEvents(data.events || []);
     } catch (err) {
       console.error("Error fetching events:", err);
@@ -28,7 +28,7 @@ const AllEvents = () => {
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/admin/events", newEvent);
+      await axios.post("https://simpet-backend-1.onrender.com/api/admin/events", newEvent);
       alert("✅ Event created!");
       setNewEvent({ title: "", description: "", startDate: "", endDate: "", location: "" });
       fetchEvents();
@@ -41,7 +41,7 @@ const AllEvents = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this event?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/admin/events/${id}`);
+      await axios.delete(`https://simpet-backend-1.onrender.com/api/admin/events/${id}`);
       setEvents(events.filter((e) => e._id !== id));
     } catch (err) {
       console.error("Error deleting:", err);

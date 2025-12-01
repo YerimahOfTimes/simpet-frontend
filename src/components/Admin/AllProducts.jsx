@@ -12,7 +12,7 @@ const AllProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/admin/products", {
+      const { data } = await axios.get("https://simpet-backend-1.onrender.com/api/admin/products", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`, // if admin auth required
         },
@@ -39,7 +39,7 @@ const AllProducts = () => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/admin/products/${id}`, {
+      await axios.delete(`https://simpet-backend-1.onrender.com/api/admin/products/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setProducts(products.filter((p) => p._id !== id));

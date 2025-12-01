@@ -11,7 +11,7 @@ const AllSellers = () => {
 
   const fetchSellers = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/admin/sellers");
+      const { data } = await axios.get("https://simpet-backend-1.onrender.com/api/admin/sellers");
       setSellers(data.sellers || []);
     } catch (err) {
       console.error("Error fetching sellers:", err);
@@ -20,7 +20,7 @@ const AllSellers = () => {
 
   const handleVerify = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/admin/sellers/${id}/verify`);
+      await axios.put(`https://simpet-backend-1.onrender.com/api/admin/sellers/${id}/verify`);
       alert("✅ Seller verified!");
       fetchSellers();
     } catch (err) {
